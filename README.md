@@ -8,8 +8,6 @@ We're using scss modules for styles. In React we can access these styles with an
 ### Install Packages
 ```bash
 yarn install
-# If it fails due to yarn version conflict,
-# you can change yarn engine in the package.json
 ```
 ### Development
 ```bash

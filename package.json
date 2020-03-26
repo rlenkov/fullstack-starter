@@ -6,9 +6,6 @@
   "repository": "",
   "author": "Pencillr",
   "license": "UNLICENSED",
-  "engines": {
-    "yarn": "1.21.1"
-  },
   "scripts": {
     "start": "node -r dotenv/config server/server.js dotenv_config_path=.env",
     "start-dev": "nodemon -r dotenv/config server/server.js dotenv_config_path=.env-dev",

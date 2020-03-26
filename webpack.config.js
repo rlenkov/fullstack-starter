@@ -1,11 +1,9 @@
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = env => {
     const isProduction = env === 'production'
     const isDevelopment = env === 'development'
-    // const CSSExtract = new ExtractTextPlugin('styles.css')
 
     return {
         mode: 'development',
@@ -83,7 +81,6 @@ module.exports = env => {
             extensions: ['.js', '.jsx', '.scss'],
         },
         plugins: [
-            // CSSExtract,
             new MiniCssExtractPlugin(),
         ],
         devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',

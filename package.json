@@ -11,7 +11,8 @@
     "start-dev": "nodemon -r dotenv/config server/server.js dotenv_config_path=.env-dev",
     "build:dev": "webpack --env development",
     "build:prod": "webpack -p --env production",
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server",
+    "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
     "@svgr/webpack": "^5.1.0",

@@ -1,10 +1,10 @@
 {
-  "name": "APP",
+  "name": "Fullstack Starter App",
   "version": "1.0.0",
-  "description": "ANY.",
+  "description": "Fullstack Starter App",
   "main": "app.js",
   "repository": "",
-  "author": "Richard Lenkovits",
+  "author": "Pencillr",
   "license": "UNLICENSED",
   "engines": {
     "yarn": "1.21.1"
@@ -14,7 +14,7 @@
     "start-dev": "nodemon -r dotenv/config server/server.js dotenv_config_path=.env-dev",
     "build:dev": "webpack --env development",
     "build:prod": "webpack -p --env production",
-    "dev-server": "webpack-dev-server",
+    "dev-server": "webpack-dev-server"
   },
   "dependencies": {
     "@svgr/webpack": "^5.1.0",

@@ -1,12 +1,16 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = env => {
+module.exports = (env) => {
     const isProduction = env === 'production'
     const isDevelopment = env === 'development'
 
     return {
         mode: 'development',
+        stats: {
+            // logging: 'verbose',
+            children: false,
+        },
         entry: path.resolve(__dirname, 'src', 'app.js'),
         output: {
             path: path.resolve(__dirname, 'public'),
@@ -15,7 +19,7 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    loader: 'babel-loader',
+                    use: 'babel-loader',
                     test: /\.js$/,
                     exclude: /node_modules/,
                 },
@@ -25,35 +29,41 @@ module.exports = env => {
                 },
                 {
                     test: /\.module\.s(a|c)ss$/,
-                    loader: [
+                    use: [
                         isDevelopment
                             ? 'style-loader'
                             : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
-                                modules: true,
                                 sourceMap: isDevelopment,
-                                camelCase: true,
-                                localIdentName: '[local]--[hash:base64:5]',
+                                url: false,
+                                modules: {
+                                    compileType: 'module',
+                                    mode: 'local',
+                                    auto: true,
+                                    localIdentName: '[local]--[hash:base64:5]',
+                                    exportLocalsConvention: 'camelCase',
+                                },
                             },
                         },
                         {
                             loader: 'postcss-loader',
                             options: {
                                 sourceMap: isDevelopment,
-                                plugins: () => {
-                                    return [
-                                        require('autoprefixer'),
-                                        require('cssnano'),
-                                    ]
+                                postcssOptions: {
+                                    plugins: [['autoprefixer']],
                                 },
                             },
                         },
                         {
+                            loader: 'resolve-url-loader',
+                        },
+                        {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: isDevelopment,
+                                implementation: require('node-sass'),
+                                sourceMap: true,
                             },
                         },
                     ],
@@ -61,7 +71,7 @@ module.exports = env => {
                 {
                     test: /\.s?(a|c)ss$/,
                     exclude: /\.module.(s(a|c)ss)$/,
-                    loader: [
+                    use: [
                         isDevelopment
                             ? 'style-loader'
                             : MiniCssExtractPlugin.loader,
@@ -70,7 +80,9 @@ module.exports = env => {
                             loader: 'sass-loader',
                             options: {
                                 sourceMap: isDevelopment,
-                                includePaths: ['node_modules'],
+                                sassOptions: {
+                                    includePaths: ['node_modules'],
+                                },
                             },
                         },
                     ],
@@ -81,9 +93,10 @@ module.exports = env => {
             extensions: ['.js', '.jsx', '.scss'],
         },
         plugins: [
+            // CSSExtract,
             new MiniCssExtractPlugin(),
         ],
-        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
         devServer: {
             contentBase: path.resolve(__dirname, 'public'),
         },

@@ -1,13 +1,13 @@
 import { getRequest, postRequest } from './requests'
+import { ResponseCallback, Message } from '../types'
 
-export const getDetails = success => {
+export const getDetails = (success: ResponseCallback) => {
     const header = {
         'Content-Type': 'application/json',
     }
     getRequest(
         '/demo/',
-        (response, status) => {
-            console.log(response.message)
+        (response: Message) => {
             success(response.message)
         },
         () => {
@@ -18,9 +18,10 @@ export const getDetails = success => {
     )
 }
 
-export const rollDice = (dice, success) => {
-    const messageBody = {
-        dice,
+export const rollDice = (dice: number, success: ResponseCallback) => {
+    const messageBody: Message = {
+        result: dice,
+        message: '',
     }
     const header = {
         'Content-Type': 'application/json',
@@ -28,8 +29,7 @@ export const rollDice = (dice, success) => {
     postRequest(
         '/demo/roll',
         messageBody,
-        (response, status) => {
-            console.log(response.result)
+        (response: Message) => {
             success(response.result)
         },
         error => {

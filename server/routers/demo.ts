@@ -1,7 +1,7 @@
-const express = require('express')
-const { rollDice } = require('../roll.js')
+import express from 'express'
+import rollDice from '../roll'
 
-const router = express.Router()
+export const router = express.Router()
 
 router.get('/', async (req, res) => {
     try {
@@ -14,22 +14,22 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/roll', async (req, res) => {
-    const { dice } = req.body
+    const { result } = req.body
     try {
-        const diceInt = parseInt(dice, 10)
-        if (Number.isNaN(diceInt)) {
+        if (Number.isNaN(result)) {
             throw new Error('Dice must be a number!')
         }
-        if (diceInt > 100 || diceInt < 1) {
+        if (result > 100 || result < 1) {
             throw new Error('Invalid dice identifier!')
         }
         console.log('Test two post request received!')
-        const result = rollDice(1, dice)
-        res.json({ result })
-    } catch (e) {
+        const rollResult = rollDice(1, result)
+        console.log(rollResult)
+        res.json({ result: rollResult })
+    } catch (e: any) {
         console.error(e)
         res.status(400).send({ message: e.message })
     }
 })
 
-module.exports = router
+export default router

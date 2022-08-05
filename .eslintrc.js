@@ -1,24 +1,33 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true,
+        es2021: true,
     },
-    extends: ['airbnb', 'airbnb/hooks'],
-    globals: {
-        Atomics: 'readonly',
-        SharedArrayBuffer: 'readonly',
-    },
+    extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:@typescript-eslint/recommended',
+    ],
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
+            experimentalObjectRestSpread: true,
             jsx: true,
         },
-        ecmaVersion: 2018,
+        ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['react'],
+    plugins: ['react', '@typescript-eslint', 'prettier', 'jsx'],
     rules: {
+        'prettier/prettier': 2, // Means error
         // Indent with 4 spaces
-        indent: [2, 4],
+        indent: ['error', 4, { SwitchCase: 1 }],
+        semi: ['error', 'never'],
+        quotes: ['error', 'single'],
+        'implicit-arrow-linebreak': ['off'],
+        'function-paren-newline': ['error', 'multiline-arguments'],
+        'operator-linebreak': ['off'],
+        'arrow-body-style': ['off'],
 
         // Indent JSX with 4 spaces
         'react/jsx-indent': [2, 4],
@@ -28,30 +37,14 @@ module.exports = {
         // Allow js as filename extension
         'react/jsx-filename-extension': [0],
         'import/extensions': 'off',
-        semi: [2, 'never'],
-        quotes: ['error', 'single'],
+
         'jsx-quotes': ['error', 'prefer-single'],
         'react/jsx-fragments': ['error', 'element'],
         'arrow-parens': ['error', 'as-needed'],
-        // 'comma-dangle': ['error', 'never'],
-        'react/destructuring-assignment': ['error', 'never'],
-        // 'operator-linebreak': ['error', 'after'],
-        'jsx-a11y/label-has-associated-control': [
-            'error',
-            {
-                required: {
-                    some: ['nesting', 'id'],
-                },
-            },
-        ],
-        'jsx-a11y/label-has-for': [
-            'error',
-            {
-                required: {
-                    some: ['nesting', 'id'],
-                },
-            },
-        ],
+        'react/destructuring-assignment': ['off'],
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/interactive-supports-focus': ['off'],
+        'jsx-a11y/control-has-associated-label': 'off',
         'react/jsx-one-expression-per-line': [
             'error',
             { allow: 'single-child' },

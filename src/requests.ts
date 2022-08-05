@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { ResponseCallback, Message } from '../types'
 
 export const getRequest = (
-    path,
-    success,
-    failed,
+    path: string,
+    success: ResponseCallback,
+    failed: ResponseCallback,
     headers = {
         'Content-Type': 'application/json',
     },
@@ -22,10 +23,10 @@ export const getRequest = (
 }
 
 export const postRequest = async (
-    path,
-    messageBody,
-    success,
-    failed,
+    path: string,
+    messageBody: Message,
+    success: ResponseCallback,
+    failed: ResponseCallback,
     headers = {
         'Content-Type': 'application/json',
     },
@@ -35,7 +36,7 @@ export const postRequest = async (
             headers,
         })
         .then(response => {
-            success(response.data, response.status)
+            success(response.data)
             return response.data
         })
         .catch(error => {

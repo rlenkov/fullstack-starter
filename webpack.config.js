@@ -11,7 +11,7 @@ module.exports = (env) => {
             // logging: 'verbose',
             children: false,
         },
-        entry: path.resolve(__dirname, 'src', 'app.js'),
+        entry: path.resolve(__dirname, 'src', 'app.tsx'),
         output: {
             path: path.resolve(__dirname, 'public'),
             filename: 'bundle.js',
@@ -19,8 +19,8 @@ module.exports = (env) => {
         module: {
             rules: [
                 {
-                    use: 'babel-loader',
-                    test: /\.js$/,
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
                     exclude: /node_modules/,
                 },
                 {
@@ -39,7 +39,6 @@ module.exports = (env) => {
                                 sourceMap: isDevelopment,
                                 url: false,
                                 modules: {
-                                    compileType: 'module',
                                     mode: 'local',
                                     auto: true,
                                     localIdentName: '[local]--[hash:base64:5]',
@@ -57,13 +56,10 @@ module.exports = (env) => {
                             },
                         },
                         {
-                            loader: 'resolve-url-loader',
-                        },
-                        {
                             loader: 'sass-loader',
                             options: {
-                                implementation: require('node-sass'),
-                                sourceMap: true,
+                                implementation: require('sass'),
+                                sourceMap: isDevelopment,
                             },
                         },
                     ],
@@ -90,7 +86,7 @@ module.exports = (env) => {
             ],
         },
         resolve: {
-            extensions: ['.js', '.jsx', '.scss'],
+            extensions: ['.tsx', '.ts', '.scss', '.js'],
         },
         plugins: [
             // CSSExtract,

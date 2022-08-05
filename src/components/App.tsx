@@ -6,9 +6,10 @@ const App = () => {
     const [details, setDetails] = useState(null)
     const [result, setResult] = useState(null)
 
-    const handleRollSubmit = e => {
+    const handleRollSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        rollDice(e.target.elements.dice_type.value, setResult)
+        const value = (e.currentTarget.elements[0] as HTMLInputElement).value
+        rollDice(parseInt(value), setResult)
     }
 
     return (
@@ -34,7 +35,7 @@ const App = () => {
                     {details ? <p>{details}</p> : null}
                 </div>
                 <form
-                    onSubmit={e => {
+                    onSubmit={(e) => {
                         handleRollSubmit(e)
                     }}
                 >
